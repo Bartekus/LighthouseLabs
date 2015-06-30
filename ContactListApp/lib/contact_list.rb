@@ -1,4 +1,5 @@
 require_relative 'contact'
+require_relative 'database'
 require 'yaml'
 
 class ContactList
@@ -10,15 +11,11 @@ class ContactList
   end
 
   def open
-    if File.exist?('contacts.yml')
-      @contacts = YAML.load_file('contacts.yml')
-    end
+      @contacts = Database.open
   end
 
   def save
-    File.open('contacts.yml', 'w') do |file|
-      file.write(contacts.to_yaml)
-    end
+      Database.save(contacts)
   end
 
   def run

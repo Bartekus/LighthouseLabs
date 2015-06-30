@@ -83,8 +83,21 @@ class Contact
     phone_numbers.each { |phone_number| puts phone_number }
   end
 
+  def phone_numbers_single_line
+    phone_numbers.each { |phone_number| phone_number.to_s }
+  end
+
   def print_addresses
     puts 'Addresses'
     addresses.each { |address| puts address.to_s('short') }
   end
+
+  def addresses_single_line
+    addresses.each { |address| address.to_s('short') }
+  end
+
+end
+
+def to_a
+  [last_first,phone_numbers_single_line, addresses_single_line]
 end
