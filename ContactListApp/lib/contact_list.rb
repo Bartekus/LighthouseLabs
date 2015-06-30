@@ -1,8 +1,7 @@
-require './contact'
+require_relative 'contact'
 require 'yaml'
 
 class ContactList
-
   attr_reader :contacts
 
   def initialize
@@ -34,18 +33,19 @@ class ContactList
       case input
         when 'a' then add_contact
         when 'p' then print_contact_list
-        when 's' then
+        when 's'
           print 'Search term: '
           search = gets.chomp
           find_by_name(search)
           find_by_phone_number(search)
           find_by_address(search)
-        when 'e' then
+        when 'e'
           save
           break
         else
           puts 'Wrong key!'
       end
+      puts "\n"
     end
   end
 
@@ -57,7 +57,6 @@ class ContactList
     contact.middle_name = gets.chomp
     print 'Last name: '
     contact.last_name = gets.chomp
-    contacts.push(contact)
 
     loop do
       puts 'Add phone number or address? '
@@ -75,11 +74,11 @@ class ContactList
           contact.phone_numbers.push(phone)
         when 'a'
           address = Address.new
-          print 'Address kind (Home, Work, etc): '
+          print 'Address Kind (Home, Work, etc): '
           address.kind = gets.chomp
-          print 'Address line1: '
+          print 'Address line 1: '
           address.street_1 = gets.chomp
-          print 'Address line2: '
+          print 'Address line 2: '
           address.street_2 = gets.chomp
           print 'City: '
           address.city = gets.chomp
@@ -93,11 +92,12 @@ class ContactList
           break
       end
     end
+
+    contacts.push(contact)
   end
 
   def print_results(search, results)
     puts search
-    puts "Name search results (#{search})"
     results.each do |contact|
       puts contact.to_s('full_name')
       contact.print_phone_numbers
@@ -109,71 +109,29 @@ class ContactList
   def find_by_name(name)
     results = []
     search = name.downcase
-    contacts.each do |contact|
-      if contact.full_name.downcase.include?(search)
-        results.push(contact)
-      end
-    end
-    print_results("Name search results (#{search})", results)
+    contacts.each { |contact| results.push(contact) if contact.full_name.downcase.include?(search) }
+    print_results("\nName search results (#{search})", results)
   end
 
   def find_by_phone_number(number)
     results = []
     search = number.gsub('-', '')
-    contacts.each do |contact|
-      contact.phone_numbers.each do |phone_number|
-        if phone_number.number.gsub('-', '').include?(search)
-          results.push(contact) unless results.include?(contact)
-        end
-      end
-    end
-    print_results("Phone search results (#{search})", results)
+    contacts.each { |contact| contact.phone_numbers.each { |phone_number| (results.push(contact) unless results.include?(contact)) if phone_number.number.gsub('-', '').include?(search) } }
+    print_results("\nPhone search results (#{search})", results)
   end
 
   def find_by_address(query)
     results = []
     search = query.downcase
-    contacts.each do |contact|
-      contact.addresses.each do |address|
-        if address.to_s('long').downcase.include?(search)
-          results.push(contact) unless results.include?(contact)
-        end
-      end
-    end
-    print_results("Address search results (#{search})", results)
+    contacts.each { |contact| contact.addresses.each { |address| (results.push(contact) unless results.include?(contact)) if address.to_s('long').downcase.include?(search) } }
+    print_results("\nAddress search results (#{search})", results)
   end
 
   def print_contact_list
-    puts 'Contact List'
-    contacts.each do |contact|
-      puts contact.to_s('last_first')
-    end
+    puts "\nContact List"
+    contacts.each { |contact| puts contact.to_s('last_first') }
   end
-
 end
 
-address_book = AddressBook.new
-address_book.run
-
-# bart = Contact.new
-# bart.first_name = 'Bart'
-# bart.middle_name = 'Paul'
-# bart.last_name = 'Kus'
-# bart.add_phone_number('Home', '123-456-7890')
-# bart.add_phone_number('Work', '476-789-0123')
-# bart.add_address('Home', '123 Main St.','', 'Vancouver', 'British Columbia', 'A0A-0A0')
-#
-# mart = Contact.new
-# mart.first_name = 'Mart'
-# mart.middle_name = 'Doug'
-# mart.last_name = 'Hall'
-# mart.add_phone_number('Home', '342-567-2452')
-# mart.add_phone_number('Work', '762-893-1783')
-# mart.add_address('Home', '145 Main St.','', 'Vancouver', 'British Columbia', 'A1A-1A1')
-#
-#
-# address_book.contacts.push(bart)
-# address_book.contacts.push(mart)
-# address_book.find_by_phone_number('56')
-# address_book.find_by_name('ar')
-# address_book.find_by_address('main')
+contact_list = ContactList.new
+contact_list.run
