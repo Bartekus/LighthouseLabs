@@ -1,10 +1,10 @@
 class Robot
-
+  @@robots = []
   MAX_WEIGHT          = 250
   WEAK_DEFAULT_ATTACK = 5
 
   attr_reader :position, :items, :health
-  attr_accessor :equipped_weapon
+  attr_accessor :equipped_weapon, :equipped_shield
 
   class InvalidTarget < StandardError
   end
@@ -17,6 +17,7 @@ class Robot
     @items           = []
     @health          = 100
     @equipped_weapon = nil
+    @equipped_shield = nil
   end
 
   def x_coord
@@ -64,6 +65,10 @@ class Robot
     health <= 80
   end
 
+  def got_shield?
+    @equipped_shield != nil
+  end
+
   def in_reach?(target)
     if equipped_weapon
      within_distance(target, equipped_weapon.range)
@@ -81,16 +86,24 @@ class Robot
   end
 
   def heal!
-    raise InvalidTarget, "Cannot heal a dead target!" if dead?
-    raise InvalidCommand, "Target already at maximum health!" if at_full?
+    raise InvalidTarget, 'Cannot heal a dead target!' if dead?
+    raise InvalidCommand, 'Target already at maximum health!' if at_full?
   end
 
   def attack!(target)
-    raise InvalidTarget, "Cannot attack non-robot targets" unless valid?(target)
+    raise InvalidTarget, 'Cannot attack non-robot targets' unless valid?(target)
   end
 
-  def wound(damage)
+  def wound(full_damage)
     unless dead?
+
+      if got_shield?
+        damage = equipped_shield.absorb(full_damage)
+      else
+        damage = full_damage
+      end
+
+      puts "Any ?? #{damage}"
       @health - damage <= 0 ? @health = 0 : @health -= damage
     end
   end
@@ -105,7 +118,7 @@ class Robot
     if valid?(target) && in_reach?(target)
       @equipped_weapon ? @equipped_weapon.hit(target) : target.wound(WEAK_DEFAULT_ATTACK)
     else
-       attack!(target) #currently 10B is not compatible with the rest of the test
+       attack!(target)
     end
   end
 
@@ -114,6 +127,7 @@ class Robot
         @equipped_weapon = item if item.weapon?
         if item.item?
           item.feed(self) if item.eatable? && below_80?
+          @equipped_shield = item if item.shield?
           @items.push(item)
         end
       end

@@ -19,4 +19,8 @@ class Item
       self.is_a?(BoxOfBolts)
     end
 
+    def shield?
+      self.is_a?(PowerShield)
+    end
+
 end
