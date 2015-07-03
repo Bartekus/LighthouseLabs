@@ -6,8 +6,7 @@ class GameEngine
   def initialize
     @players        = []
     @gameover       = false
-    @gameover_text1 = ''
-    @gameover_text2 = ''
+    @gameover_text = ''
   end
 
   def clear_screen
@@ -26,20 +25,16 @@ class GameEngine
     @players << Player.new(name)
   end
 
-  def initialize_game(greeting1, greeting2, play_text1, play_text2, continue_text, gameover_text1, gameover_text2)
+  def initialize_game(greeting, play_text, continue_text, gameover_text)
     setup_counter   = 0
-    @gameover_text1 = gameover_text1
-    @gameover_text2 = gameover_text2
+    @gameover_text = gameover_text
     @continue_text  = continue_text
     clear_screen
-    greeting1.call
-    greeting2.call
+    greeting.call
     get_input.to_i.times do
       setup_counter += 1
       clear_screen
-      play_text1.call
-      print "#{setup_counter}"
-      play_text2.call
+      play_text.call("#{setup_counter}")
       add_player
     end
   end
@@ -56,7 +51,7 @@ class GameEngine
     gets.chomp.to_s
   end
 
-  def loop(question_text, p_q_text1, p_q_text2, resolution_text, correct_text, incorrect_text, answer_text, score_text, p_score_text1, p_score_text2, p_score_text3, continue_text)
+  def loop(question_text, p_q_text1, p_q_text2, resolution_text, correct_text, incorrect_text, answer_text, score_text, p_score_text, continue_text)
     @question_text   = question_text
     @p_q_text1       = p_q_text1
     @p_q_text2       = p_q_text2
@@ -65,9 +60,7 @@ class GameEngine
     @incorrect_text  = incorrect_text
     @answer_text     = answer_text
     @score_text      = score_text
-    @p_score_text1   = p_score_text1
-    @p_score_text2   = p_score_text2
-    @p_score_text3   = p_score_text3
+    @p_score_text    = p_score_text
     @continue_text   = continue_text
     until @gameover do
       get_question
@@ -86,13 +79,11 @@ class GameEngine
 
   def get_question
     question = Question.generate
-    @question_text.call
-    print " #{question}"
+    @question_text.call("#{question}")
     @players.each do |player|
-      @p_q_text1.call
-      print "#{player.name} ? : "
+      @p_q_text1.call("#{player.name} ? : ")
       player.answer = get_input
-      @p_q_text2.call
+      @p_q_text2.call("#{player.name}!")
     end
   end
 
@@ -100,28 +91,20 @@ class GameEngine
     @resolution_text.call
     @players.each do |player|
       if verify_answer(player.answer)
-        print "#{player.name}"
-        @correct_text.call
+        @correct_text.call("#{player.name}")
         player.score += 1
       else
-        print "#{player.name}"
-        @incorrect_text.call
+        @incorrect_text.call("#{player.name}")
         player.life -= 1
       end
     end
-    @answer_text.call
-    print "#{true_answer}"
+    @answer_text.call("#{true_answer}")
   end
 
   def judge
     @score_text.call
     @players.each do |player|
-      print "#{player.name}"
-      @p_score_text1.call
-      print "#{player.score}"
-      @p_score_text2.call
-      print "#{player.life}"
-      @p_score_text3.call
+      @p_score_text.call("#{player.name}", "#{player.score}", "#{player.life}")
       @gameover = true if player.life == 0
     end
   end
@@ -134,12 +117,8 @@ class GameEngine
         @top_score = player.score
         @winner    = player.name
       end
+      @winner = 'Nobody' if @winner == nil || @winner.empty?
     end
-    @gameover_text1.call
-    print "#{@winner}"
-    @gameover_text2.call
-    print "#{@top_score}"
+    @gameover_text.call("#{@winner}", "#{@top_score}")
   end
 end
-
-
