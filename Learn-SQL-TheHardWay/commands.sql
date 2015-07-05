@@ -182,3 +182,32 @@ sqlite3 -header -column -echo mydata.db < ex11.sql
 --- sqlite> /* Now you can see I'm back. */
 --- sqlite> SELECT * FROM person;
 --- 0|Zed|Shaw|37
+
+
+-------------------
+--- Exercise 12 ---
+sqlite3 -echo ex12.db < ex12.sql
+
+--- DROP TABLE IF EXISTS person;
+---
+--- CREATE TABLE person (
+---     id INTEGER PRIMARY KEY,
+---     first_name TEXT,
+---     last_name TEXT,
+---     age INTEGER
+--- );
+---
+--- ALTER TABLE person RENAME TO peoples;
+--- ALTER TABLE peoples ADD COLUMN hatred INTEGER;
+--- ALTER TABLE peoples RENAME TO person;
+---
+--- .schema person
+---
+--- CREATE TABLE "person" (
+---     id INTEGER PRIMARY KEY,
+---     first_name TEXT,
+---     last_name TEXT,
+---     age INTEGER
+--- , hatred INTEGER);
+---
+--- DROP TABLE person;
