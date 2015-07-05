@@ -3,6 +3,9 @@ require_relative 'question'
 
 class GameEngine
 
+  class InvalidGuessError < ArgumentError
+  end
+
   def initialize
     @players        = []
     @gameover       = false
@@ -44,6 +47,7 @@ class GameEngine
   end
 
   def verify_answer(answer)
+    raise InvalidGuessError, 'Argument is not numeric' unless answer.is_a? Numeric
     true_answer == answer ? true : false
   end
 
