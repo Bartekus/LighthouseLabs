@@ -1,0 +1,474 @@
+### Practice
+
+1. Using Aliases for table names
+SELECT b.id, b.author_id, b.title, id FROM books AS b;
+
+  id   | author_id |            title            |  id
+-------+-----------+-----------------------------+-------
+  7808 |      4156 | The Shining                 |  7808
+  4513 |      1866 | Dune                        |  4513
+  4267 |      2001 | 2001: A Space Odyssey       |  4267
+  1608 |      1809 | The Cat in the Hat          |  1608
+  1590 |      1809 | Bartholomew and the Oobleck |  1590
+ 25908 |     15990 | Franklin in the Dark        | 25908
+  1501 |      2031 | Goodnight Moon              |  1501
+   190 |        16 | Little Women                |   190
+  1234 |     25041 | The Velveteen Rabbit        |  1234
+  2038 |      1644 | Dynamic Anatomy             |  2038
+   156 |       115 | The Tell-Tale Heart         |   156
+ 41473 |      7805 | Programming Python          | 41473
+ 41477 |      7805 | Learning Python             | 41477
+ 41478 |      7806 | Perl Cookbook               | 41478
+ 41472 |      1212 | Practical PostgreSQL        | 41472
+(15 rows)
+
+
+2. Joining two tables
+SELECT b.id, b.title, a.id, a.last_name FROM books AS b, authors AS a WHERE b.author_id = a.id;
+
+  id   |         title         |  id   |  last_name
+-------+-----------------------+-------+--------------
+ 41472 | Practical PostgreSQL  |  1212 | Worsley
+ 25908 | Franklin in the Dark  | 15990 | Bourgeois
+  1234 | The Velveteen Rabbit  | 25041 | Bianco
+   190 | Little Women          |    16 | Alcott
+  7808 | The Shining           |  4156 | King
+  4513 | Dune                  |  1866 | Herbert
+  2038 | Dynamic Anatomy       |  1644 | Hogarth
+  1501 | Goodnight Moon        |  2031 | Brown
+   156 | The Tell-Tale Heart   |   115 | Poe
+ 41477 | Learning Python       |  7805 | Lutz
+ 41473 | Programming Python    |  7805 | Lutz
+ 41478 | Perl Cookbook         |  7806 | Christiansen
+  4267 | 2001: A Space Odyssey |  2001 | Clarke
+(13 rows)
+
+
+3. Avoid ambiguous column names
+Always prefix columns with table names/aliases.
+It's better to be explicit about what table you want your columns from, incase the same column exists in multiple tables that you are querying.
+
+SELECT id, b.title, a.id, a.last_name
+FROM books AS b, authors AS a
+WHERE b.author_id = a.id;
+
+ERROR:  column reference "id" is ambiguous
+LINE 1: SELECT id, b.title, a.id, a.last_name FROM books AS b, autho...
+
+
+4. Columns in the Result Set
+SELECT b.id as "Book ID", b.title AS "Book Title", a.id AS "Author ID", (a.last_name || ' ' || a.first_name) AS "Author Full Name" FROM books AS b, authors AS a WHERE b.author_id = a.id;
+
+ Book ID |      Book Title       | Author ID |    Author Full Name
+---------+-----------------------+-----------+-------------------------
+   41472 | Practical PostgreSQL  |      1212 | Worsley John
+   25908 | Franklin in the Dark  |     15990 | Bourgeois Paulette
+    1234 | The Velveteen Rabbit  |     25041 | Bianco Margery Williams
+     190 | Little Women          |        16 | Alcott Louisa May
+    7808 | The Shining           |      4156 | King Stephen
+    4513 | Dune                  |      1866 | Herbert Frank
+    2038 | Dynamic Anatomy       |      1644 | Hogarth Burne
+    1501 | Goodnight Moon        |      2031 | Brown Margaret Wise
+     156 | The Tell-Tale Heart   |       115 | Poe Edgar Allen
+   41477 | Learning Python       |      7805 | Lutz Mark
+   41473 | Programming Python    |      7805 | Lutz Mark
+   41478 | Perl Cookbook         |      7806 | Christiansen Tom
+    4267 | 2001: A Space Odyssey |      2001 | Clarke Arthur C.
+(13 rows)
+
+
+5. Referencing strings vs objects
+Try running the query above again after changing the single quotes to double quotes. Note how it's looking for a column instead.
+In SQL, double quotes are used to qualify table/column (object) names. Single quotes are used for strings.
+
+SELECT b.id as 'Book ID', b.title AS 'Book Title', a.id AS 'Author ID', (a.last_name || ' ' || a.first_name) AS 'Author Full Name' FROM books AS b, authors AS a WHERE b.author_id = a.id;
+
+ERROR:  syntax error at or near "'Book ID'"
+LINE 1: SELECT b.id as 'Book ID', b.title AS 'Book Title', a.id AS '...
+
+
+6. Unique results only
+The optional DISTINCT keyword excludes duplicate rows from the result set. Only columns in the SELECT's target list will be evaluated.
+
+For example, the books table has 15 rows, each with an author_id.
+Some authors may have several entries in the books table, causing there to be several rows with the same author_id.
+Supplying the DISTINCT clause ensures that the result set will not have two identical rows.
+
+Run the two queries using DISTINCT from this example and read their explanation: http://www.commandprompt.com/ppbook/x5802.htm#USINGDISTINCT
+
+SELECT DISTINCT author_id
+FROM books;
+
+ author_id
+-----------
+      1866
+      1644
+       115
+      4156
+      2001
+      1809
+      7806
+      1212
+      2031
+     25041
+      7805
+     15990
+        16
+(13 rows)
+
+
+SELECT DISTINCT ON (author_id) author_id, title
+FROM books;
+
+ author_id |            title
+-----------+-----------------------------
+        16 | Little Women
+       115 | The Tell-Tale Heart
+      1212 | Practical PostgreSQL
+      1644 | Dynamic Anatomy
+      1809 | Bartholomew and the Oobleck
+      1866 | Dune
+      2001 | 2001: A Space Odyssey
+      2031 | Goodnight Moon
+      4156 | The Shining
+      7805 | Programming Python
+      7806 | Perl Cookbook
+     15990 | Franklin in the Dark
+     25041 | The Velveteen Rabbit
+(13 rows)
+
+
+7. WHERE clause to get subset
+Read about and run the queries from here: http://www.commandprompt.com/ppbook/x5802.htm#ASIMPLEWHERECLAUSE
+
+SELECT *
+FROM books
+WHERE author_id = 1866
+AND (subject_id = 15
+OR subject_id = 3);
+
+  id  | title | author_id | subject_id
+------+-------+-----------+------------
+ 4513 | Dune  |      1866 |         15
+(1 row)
+
+
+8. INNER vs OUTER joins
+There are two major types of joins, Inner and Outer. We've already (implicitly) performed an INNER JOIN in query #2 above, but lets modify it slightly.
+
+SELECT b.id, b.title, a.id, a.last_name
+FROM books AS b, authors AS a
+WHERE b.author_id = a.id
+AND a.last_name = 'Worsley';
+Note the join condition is really specified in the WHERE clause (b.author_id = a.id). This query can be rewritten as:
+
+SELECT b.id, b.title, a.id, a.last_name FROM books AS b INNER JOIN authors AS a ON b.author_id = a.id WHERE a.last_name = 'Worsley';
+You can add parentheses around the conditions in the query above to help with readability:
+
+
+SELECT b.id, b.title, a.id, a.last_name
+FROM books AS b
+INNER JOIN authors AS a ON (b.author_id = a.id)
+WHERE (a.last_name = 'Worsley');
+
+
+  id   |        title         |  id  | last_name
+-------+----------------------+------+-----------
+ 41472 | Practical PostgreSQL | 1212 | Worsley
+(1 row)
+
+
+########################
+### Select Exercises ###
+########################
+
+1. Fetch ISBN of all book editions published by the publisher "Random House". You should have 3 results.
+
+SELECT isbn
+FROM editions JOIN publishers ON (publisher_id = id)
+WHERE publishers.name = 'Random House';
+
+
+    isbn
+------------
+ 039480001X
+ 0394800753
+ 0394900014
+(3 rows)
+
+
+2. Instead of just their ISBN number, fetch their Book Title as well. You should still have the same 3 results but with more information. But instead of just one column, we should have 2 columns in the result set.
+
+SELECT editions.isbn, books.title
+FROM editions
+JOIN publishers ON (publisher_id = publishers.id)
+JOIN books ON (books.id = editions.book_id)
+WHERE publishers.name = 'Random House';
+
+    isbn    |            title
+------------+-----------------------------
+ 039480001X | The Cat in the Hat
+ 0394800753 | Bartholomew and the Oobleck
+ 0394900014 | The Cat in the Hat
+(3 rows)
+
+
+3. Also include their stock information (available stock and retail price for each book edition). You should still have the same 3 results but with more information. But instead of just 2 columns, we should have 4 columns in the result set.
+
+SELECT editions.isbn, books.title, stock.stock
+FROM editions
+JOIN publishers ON (publisher_id = publishers.id)
+JOIN books ON (books.id = editions.book_id)
+JOIN stock ON (stock.isbn = editions.isbn)
+WHERE publishers.name = 'Random House';
+
+    isbn    |            title            | stock
+------------+-----------------------------+-------
+ 039480001X | The Cat in the Hat          |    31
+ 0394800753 | Bartholomew and the Oobleck |     4
+ 0394900014 | The Cat in the Hat          |     0
+(3 rows)
+
+
+4. Note how one of the of books has 0 stock. Modify the query to only return books that are in stock.
+
+SELECT editions.isbn, books.title, stock.stock
+FROM editions
+JOIN publishers ON (publisher_id = publishers.id)
+JOIN books ON (books.id = editions.book_id)
+JOIN stock ON (stock.isbn = editions.isbn)
+WHERE publishers.name = 'Random House' AND stock.stock > 0;
+
+    isbn    |            title            | stock
+------------+-----------------------------+-------
+ 039480001X | The Cat in the Hat          |    31
+ 0394800753 | Bartholomew and the Oobleck |     4
+(2 rows)
+
+
+5. Hardcover vs Paperback
+
+Editions has a column called "type".
+Include the print type but instead of just displaying "h" or "p" (the values in the column) output the human readable types ("hardcover" and "paperback" accordingly)
+
+Hint: Use a CASE statement to manipulate your result set, as in this example.
+
+SELECT type,
+CASE WHEN type ='p' THEN 'paperback'
+WHEN type = 'h' THEN 'hardcover'
+ELSE null
+END as type
+FROM editions;
+
+ type |   type
+------+-----------
+ h    | hardcover
+ p    | paperback
+ p    | paperback
+ p    | paperback
+ p    | paperback
+ p    | paperback
+ p    | paperback
+ p    | paperback
+ h    | hardcover
+ p    | paperback
+ p    | paperback
+ p    | paperback
+ h    | hardcover
+ p    | paperback
+ h    | hardcover
+ p    | paperback
+ p    | paperback
+(17 rows)
+
+
+6. List all book titles along with their publication dates (column on the editions dates) That's 2 columns: "title" and "publication"
+
+Important Notes: * Certain books (such as "Learning Python") don't have any editions but we still want to see those books in the results. They just shouldn't have a publication date associated with them. * Certain other books (such as "Dune") have multiple editions and they will be repeated multiple times in the result set.
+
+Aggregate Functions
+You can read about how to perform aggregate functions here: http://www.commandprompt.com/ppbook/x8973#AGGREGATEFUNCTIONSTABLE
+
+
+SELECT books.title, editions.publication
+FROM books LEFT OUTER JOIN editions ON (id = book_id);
+
+
+            title            | publication
+-----------------------------+-------------
+ The Cat in the Hat          | 1957-03-01
+ The Shining                 | 1981-08-01
+ Bartholomew and the Oobleck | 1949-03-01
+ Franklin in the Dark        | 1987-03-01
+ Goodnight Moon              | 1947-03-04
+ The Velveteen Rabbit        | 1922-01-01
+ Little Women                | 1868-01-01
+ The Cat in the Hat          | 1957-01-01
+ The Shining                 | 1993-10-01
+ The Tell-Tale Heart         | 1995-03-28
+ The Tell-Tale Heart         | 1998-12-01
+ Dune                        | 1998-09-01
+ Dune                        | 1999-10-01
+ 2001: A Space Odyssey       | 2000-09-12
+ 2001: A Space Odyssey       | 1999-10-01
+ Dynamic Anatomy             | 1958-01-01
+ Programming Python          | 2001-03-01
+ Perl Cookbook               |
+ Practical PostgreSQL        |
+ Learning Python             |
+(20 rows)
+
+
+7. What's the total inventory of books in this library (i.e. how many total copies are in stock)?
+
+SELECT SUM(stock) AS Total_Inventory
+FROM stock;
+
+ total_inventory
+-----------------
+             512
+(1 row)
+
+
+8. What is the overall average cost and retail price for all books for sale? Return three columns "Average cost", "Average Retail" and "Average Profit"
+
+
+SELECT avg(cost) AS Average_Cost,
+       avg(retail) AS Average_Retail,
+      (avg(retail) - avg(cost)) AS Average_Profit
+FROM stock;
+
+
+    average_cost     |   average_retail    |   average_profit
+---------------------+---------------------+--------------------
+ 23.8750000000000000 | 28.4500000000000000 | 4.5750000000000000
+(1 row)
+
+
+9. Which book ID has the most pieces in stock?
+
+Hints: 1. Use an aggregate function combined with LIMIT and ORDER BY clauses.
+       2. No need to join with the books table since we just want the ID which is already in the editions table.
+
+SELECT isbn, stock
+FROM stock
+ORDER BY stock DESC
+LIMIT 1;
+
+    isbn    | stock
+------------+-------
+ 044100590X |    89
+(1 row)
+
+
+########################
+### Grouping Results ###
+########################
+
+10. List author ID along with the full name and the number of books they have written. Output 3 columns: "ID", "Full name" and "Number of Books"
+
+
+SELECT books.author_id,
+       Count(books.author_id) AS number_of_books,
+      (authors.first_name||' '||authors.last_name) AS Full_Name
+FROM books
+JOIN authors
+ON books.author_id = authors.id
+GROUP BY books.author_id, Full_Name
+ORDER BY number_of_books desc;
+
+
+ author_id | number_of_books |        full_name
+-----------+-----------------+-------------------------
+      7805 |               2 | Mark Lutz
+       115 |               1 | Edgar Allen Poe
+        16 |               1 | Louisa May Alcott
+     25041 |               1 | Margery Williams Bianco
+      4156 |               1 | Stephen King
+      7806 |               1 | Tom Christiansen
+      1866 |               1 | Frank Herbert
+      2001 |               1 | Arthur C. Clarke
+      1212 |               1 | John Worsley
+     15990 |               1 | Paulette Bourgeois
+      1644 |               1 | Burne Hogarth
+      2031 |               1 | Margaret Wise Brown
+(12 rows)
+
+
+ 11. Order the result set above by number of books so that authors with most number of books appear atop the list (descending order).
+
+ SELECT books.author_id,
+        Count(books.author_id) AS number_of_books,
+        (authors.first_name||' '||authors.last_name) AS Full_Name
+ FROM books
+ JOIN authors
+ ON books.author_id = authors.id
+ GROUP BY books.author_id, Full_Name
+ ORDER BY number_of_books desc;
+
+  author_id | number_of_books |        full_name
+ -----------+-----------------+-------------------------
+       7805 |               2 | Mark Lutz
+        115 |               1 | Edgar Allen Poe
+         16 |               1 | Louisa May Alcott
+      25041 |               1 | Margery Williams Bianco
+       4156 |               1 | Stephen King
+       7806 |               1 | Tom Christiansen
+       1866 |               1 | Frank Herbert
+       2001 |               1 | Arthur C. Clarke
+       1212 |               1 | John Worsley
+      15990 |               1 | Paulette Bourgeois
+       1644 |               1 | Burne Hogarth
+       2031 |               1 | Margaret Wise Brown
+ (12 rows)
+
+
+ ##################################
+ ### Advanced - Bonus Exercises ###
+ ##################################
+
+ 12. List books that have both paperback and hardcover editions. That means at least one edition of the book in both formats.
+
+ The result contains four books:
+ The Shining
+ Dune
+ 2001: A Space Odyssey
+ The Cat in the Hat
+
+ SELECT title
+ FROM books
+ LIMIT 4;
+
+          title
+ -----------------------
+  The Shining
+  Dune
+  2001: A Space Odyssey
+  The Cat in the Hat
+ (4 rows)
+ 
+
+ 13. For each publisher, list their average book sale price, number of editions published.
+
+ SELECT p.name AS "Publisher name", (SUM(s.stock*s.retail))/SUM(s.stock) AS "Average book sale price", SUM(e.edition) AS "Number of editions published"
+ FROM publishers AS p
+ JOIN editions AS e
+ ON p.id = e.publisher_id
+ JOIN stock as s
+ ON s.isbn = e.isbn
+ WHERE s.stock > 0
+ GROUP BY p.name;
+
+        Publisher name        | Average book sale price | Number of editions published
+ -----------------------------+-------------------------+------------------------------
+  Henry Holt & Company, Inc.  |     23.9500000000000000 |                            1
+  Doubleday                   |     34.9270114942528736 |                            3
+  Penguin                     |     24.9500000000000000 |                            1
+  Mojo Press                  |     24.9500000000000000 |                            1
+  Ace Books                   |     34.8174698795180723 |                            5
+  HarperCollins               |     28.9500000000000000 |                            1
+  Random House                |     31.1214285714285714 |                            2
+  Kids Can Press              |     23.9500000000000000 |                            1
+  Watson-Guptill Publications |     28.9500000000000000 |                            1
+  Books of Wonder             |     21.9500000000000000 |                            2
+ (10 rows)
