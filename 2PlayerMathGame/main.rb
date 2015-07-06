@@ -30,3 +30,6 @@ continue_text   = lambda { print "\n\n\t\tType 'y' or 'yes' to continue or press
 
 @game.initialize_game(greeting, play_text, continue_text, gameover_text)
 @game.loop(question_text, p_q_text1, p_q_text2, resolution_text, correct_text, incorrect_text, answer_text, score_text, p_score_text, continue_text)
+
+
+# Gotta remake this using ERB's
