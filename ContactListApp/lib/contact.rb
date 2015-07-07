@@ -96,8 +96,9 @@ class Contact
     addresses.each { |address| address.to_s('short') }
   end
 
+  def to_a
+    [last_first,phone_numbers_single_line, addresses_single_line]
+  end
 end
 
-def to_a
-  [last_first,phone_numbers_single_line, addresses_single_line]
-end
+

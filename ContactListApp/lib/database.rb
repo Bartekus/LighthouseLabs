@@ -1,7 +1,6 @@
 require_relative 'contact'
 require 'yaml'
 require 'csv'
-#customers = CSV.read('contacts.csv')
 
 class Database
 
@@ -9,7 +8,6 @@ class Database
     if File.exist?('contacts.yml')
       return YAML.load_file('contacts.yml')
     end
-
   end
 
   def self.save(contacts)
@@ -17,16 +15,13 @@ class Database
       file.write(contacts.to_yaml)
     end
 
-
-
-
-    CSV.open('contacts.csv', 'w') do |csv_object|
-      contacts.each do |contact|
-        csv_object << contact.to_a
+    def self.csv_save(contacts)
+      CSV.open('contacts.csv', 'w') do |csv_object|
+        contacts.each do |contact|
+          csv_object << contact
+        end
       end
-
-
     end
-  end
 
+  end
 end

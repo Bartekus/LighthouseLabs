@@ -11,11 +11,14 @@ class ContactList
   end
 
   def open
-      @contacts = Database.open
+      @contacts = Database.open unless Database.open.nil?
   end
 
   def save
       Database.save(contacts)
+      formatted = []
+      contacts.each { |contact| formatted << contact.to_a }
+      Database.csv_save(formatted)
   end
 
   def run
@@ -89,8 +92,7 @@ class ContactList
           break
       end
     end
-
-    contacts.push(contact)
+    @contacts.push(contact)
   end
 
   def print_results(search, results)
