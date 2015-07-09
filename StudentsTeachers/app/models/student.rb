@@ -1,3 +1,5 @@
 class Student < ActiveRecord::Base
-  # implement your Student model here
+  has_many :teachers
+  
+
 end

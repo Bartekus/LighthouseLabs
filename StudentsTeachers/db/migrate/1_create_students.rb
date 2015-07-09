@@ -1,6 +1,6 @@
 class CreateStudents < ActiveRecord::Migration
   
-  def chnage
+  def change
     # Add code to create the table here
     # HINT: check out ActiveRecord::Migration.create_table
     create_table :students do |t|
