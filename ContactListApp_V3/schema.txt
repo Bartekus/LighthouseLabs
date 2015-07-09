@@ -1,0 +1,66 @@
+# contacts
+CREATE TABLE contacts
+(
+id serial PRIMARY KEY CASCADE,   #### ADD THIS!!!!!
+first_name varchar(91) NOT NULL,
+middle_name varchar(91),
+last_name varchar(91) NOT NULL
+);
+
+
+# adding contact
+INSERT INTO contacts (first_name, middle_name, last_name)
+VALUES ('Bart', 'Paul', 'Kus')
+
+
+# phone numbers
+CREATE TABLE phone_numbers
+(
+id serial PRIMARY KEY,
+contact_id int REFERENCES contacts(id),
+phone_type varchar(20) NOT NULL,
+number varchar(20) NOT NULL
+);
+
+
+# adding contact's phone number
+INSERT INTO phone_numbers (contact_id, phone_type, number)
+VALUES (1, 'Cell', '778-232-6992');
+
+
+# addresses
+CREATE TABLE addresses
+(
+id serial PRIMARY KEY,
+contact_id int REFERENCES contacts(id),
+address_type varchar(20) NOT NULL,
+street_1 varchar(50) NOT NULL,
+street_2 varchar(50) NOT NULL,
+city varchar(50) NOT NULL,
+province varchar(50) NOT NULL,
+postal_code varchar(50) NOT NULL,
+country varchar(50) NOT NULL
+);
+
+# adding contact's address
+INSERT INTO addresses (contact_id, address_type, street_1, street_2, city, province, postal_code, country)
+VALUES (1, 'Home', '#201', '15268 100 Ave', 'Surrey', 'British Columbia', 'V3R-7V1', 'Canada');
+
+
+# emails
+CREATE TABLE emails
+(
+id serial PRIMARY KEY,
+contact_id int REFERENCES contacts(id),
+email_type varchar(20) NOT NULL,
+email varchar(50) NOT NULL
+);
+
+
+# adding contact's email
+INSERT INTO emails (contact_id, email_type, email)
+VALUES (1, 'Personal', 'bartekus@gmail.com');
+
+
+# Find All
+SELECT DISTINCT contacts.id, contacts.first_name, contacts.middle_name, contacts.last_name, emails.email_type, emails.email, phone_numbers.phone_type, phone_numbers.number, addresses.address_type, addresses.street_1, addresses.street_2, addresses.city, addresses.province, addresses.postal_code, addresses.country FROM contacts LEFT JOIN emails ON (contacts.id = emails.contact_id) LEFT JOIN phone_numbers ON (contacts.id = phone_numbers.contact_id) LEFT JOIN addresses ON (contacts.id = addresses.contact_id);
