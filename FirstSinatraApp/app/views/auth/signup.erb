@@ -1,0 +1,28 @@
+<h1>Sign up</h1>
+
+<form method="post" action="/signup">
+
+  <div>
+    <label>Email</label>
+    <input type="text" name="email">
+  </div>
+
+  <div>
+    <label>Password</label>
+    <input type="password" name="password">
+  </div>
+
+  <div>
+    <label>Country</label>
+    <select name="country">
+      <% Carmen::Country.all.each do |country| %>
+        <option value="<%= country.alpha_2_code %>"><%= country.name %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div>
+    <input type="submit" value="Submit">
+  </div>
+
+</form>

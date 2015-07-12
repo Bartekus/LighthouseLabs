@@ -1,0 +1,22 @@
+
+<h2>Listing All Users</h2>
+
+<table class="table table-bordered table-striped">
+
+  <tr>
+    <th>ID</th>
+    <th>Email</th>
+    <th># Messages</th>
+    <th>Signup Date</th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.email %></td>
+      <td><%= user.message_count %></td>
+      <td><%= user.created_at.to_date %></td>
+    </tr>
+  <% end %>
+
+</table>
