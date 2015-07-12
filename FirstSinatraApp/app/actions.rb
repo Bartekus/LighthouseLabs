@@ -8,17 +8,24 @@ get '/messages' do
   erb :'messages/index'
 end
 
-post '/messages' do
-  @message = Message.new(
-    title: params[:title],
-    content: params[:content],
-    author:  params[:author]
-  )
-  @message.save
-  redirect '/messages'
+get '/messages/new' do
+  erb :'messages/new'
 end
 
 get '/messages/:id' do
   @message = Message.find params[:id]
   erb :'messages/show'
+end
+
+post '/messages' do
+  @message = Message.new(
+    title:   params[:title],
+    content: params[:content],
+    author:  params[:author]
+  )
+  if @message.save
+    redirect '/messages'
+  else
+    erb :'messages/new'
+  end
 end
