@@ -1,24 +1,57 @@
+$primaryColor: #5B51A2;
+$backgroundColor: #40B5AF;
+$badgeBackground: #FFC31B;
+@mixin name {
+  -moz-border-radius: 13px;
+  -webkit-border-radius: 13px;
+  -khtml-border-radius: 13px;
+  border-radius: 13px;
+  -moz-box-shadow: 3px 3px 13px;
+  -webkit-box-shadow: 3px 3px 13px;
+  box-shadow: 3px 3px 13px;
+}
 body {
+  h1, h2 {
+    color: $primaryColor;
+    font-weight: bold;
+    text-align: center;
+  }
   font-family: Verdana;
   font-size: 1.5em;
+  background-color: $backgroundColor;
 }
-
 #team-members {
   clear: both;
+  .member {
+    float: left;
+    margin: 10px;
+    padding: 10px;
+    a.cssmouseover {
+      display:block;
+      width: 200px;
+      height: 200px;
+      border-radius: 44px;
+      box-shadow: 3px 3px 12px;
+      background-position:0px 0px;
+    }
+    a.cssmouseover:hover {
+      background-position:0px -194px;
+    }
+    div.name {
+      @include name;
+      text-align: center;
+      font-weight: bold;
+      font-family: Arial;
+      font-size: large;
+      line-height: 2;
+      background-color: $badgeBackground;
+      position: relative;
+      left: 0px;
+      top: 7px;
+    }
+  }
 }
 
-#team-members .member {
-  float: left;
-  /*border: 1px solid gray;*/
-  margin: 10px;
-  padding: 6px;
-}
 
-#team-members .member img {
-  width: 200px;
-  height: 200px;
-}
 
-#team-members .member div.name {
-  text-align: center;
-}
+

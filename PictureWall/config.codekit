@@ -2,6 +2,15 @@
 "CodeKitInfo": "This is a CodeKit 2.x project configuration file. It is designed to sync project settings across multiple machines. MODIFYING THE CONTENTS OF THIS FILE IS A POOR LIFE DECISION. If you do so, you will likely cause CodeKit to crash. This file is not useful unless accompanied by the project that created it in CodeKit 2. This file is not backwards-compatible with CodeKit 1.x. For more information, see: http:\/\/incident57.com\/codekit",
 "creatorBuild": "19033",
 "files": {
+	"\/config.rb": {
+		"fileType": 131072,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/config.rb",
+		"outputAbbreviatedPath": "\/config.rb",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/css\/normalize.css": {
 		"fileType": 16,
 		"ignore": 0,
@@ -29,6 +38,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/images\/arvinder.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 11723,
+		"inputAbbreviatedPath": "\/images\/arvinder.png",
+		"outputAbbreviatedPath": "\/images\/arvinder.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/images\/avatar.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -40,148 +60,137 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
-	"\/images\/team\/arvinder.jpg": {
-		"fileType": 16384,
+	"\/images\/charlyne_fothergill.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 12249,
-		"inputAbbreviatedPath": "\/images\/team\/arvinder.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/arvinder.jpg",
+		"initialSize": 13826,
+		"inputAbbreviatedPath": "\/images\/charlyne_fothergill.png",
+		"outputAbbreviatedPath": "\/images\/charlyne_fothergill.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/charlyne_fothergill.jpg": {
-		"fileType": 16384,
+	"\/images\/davidvandusen.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 42653,
-		"inputAbbreviatedPath": "\/images\/team\/charlyne_fothergill.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/charlyne_fothergill.jpg",
+		"initialSize": 15683,
+		"inputAbbreviatedPath": "\/images\/davidvandusen.png",
+		"outputAbbreviatedPath": "\/images\/davidvandusen.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/davidvandusen.jpg": {
-		"fileType": 16384,
+	"\/images\/don_burks.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 12310,
-		"inputAbbreviatedPath": "\/images\/team\/davidvandusen.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/davidvandusen.jpg",
+		"initialSize": 12399,
+		"inputAbbreviatedPath": "\/images\/don_burks.png",
+		"outputAbbreviatedPath": "\/images\/don_burks.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/don_burks.jpg": {
-		"fileType": 16384,
+	"\/images\/jeremy_shaki.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 45592,
-		"inputAbbreviatedPath": "\/images\/team\/don_burks.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/don_burks.jpg",
+		"initialSize": 15051,
+		"inputAbbreviatedPath": "\/images\/jeremy_shaki.png",
+		"outputAbbreviatedPath": "\/images\/jeremy_shaki.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/jeremy_shaki.jpg": {
-		"fileType": 16384,
+	"\/images\/khurram_virani.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 19716,
-		"inputAbbreviatedPath": "\/images\/team\/jeremy_shaki.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/jeremy_shaki.jpg",
+		"initialSize": 0,
+		"inputAbbreviatedPath": "\/images\/khurram_virani.png",
+		"outputAbbreviatedPath": "\/images\/khurram_virani.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/khurram_virani.jpg": {
-		"fileType": 16384,
+	"\/images\/landon.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 40112,
-		"inputAbbreviatedPath": "\/images\/team\/khurram_virani.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/khurram_virani.jpg",
+		"initialSize": 17149,
+		"inputAbbreviatedPath": "\/images\/landon.png",
+		"outputAbbreviatedPath": "\/images\/landon.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/landon.jpg": {
-		"fileType": 16384,
+	"\/images\/michael_steele.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 117209,
-		"inputAbbreviatedPath": "\/images\/team\/landon.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/landon.jpg",
+		"initialSize": 23148,
+		"inputAbbreviatedPath": "\/images\/michael_steele.png",
+		"outputAbbreviatedPath": "\/images\/michael_steele.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/michael_steele.jpg": {
-		"fileType": 16384,
+	"\/images\/monica.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 20538,
-		"inputAbbreviatedPath": "\/images\/team\/michael_steele.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/michael_steele.jpg",
+		"initialSize": 12323,
+		"inputAbbreviatedPath": "\/images\/monica.png",
+		"outputAbbreviatedPath": "\/images\/monica.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/monica.jpg": {
-		"fileType": 16384,
+	"\/images\/murat.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 9674,
-		"inputAbbreviatedPath": "\/images\/team\/monica.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/monica.jpg",
+		"initialSize": 16748,
+		"inputAbbreviatedPath": "\/images\/murat.png",
+		"outputAbbreviatedPath": "\/images\/murat.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/murat.jpg": {
-		"fileType": 16384,
+	"\/images\/rosy.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 40023,
-		"inputAbbreviatedPath": "\/images\/team\/murat.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/murat.jpg",
+		"initialSize": 9793,
+		"inputAbbreviatedPath": "\/images\/rosy.png",
+		"outputAbbreviatedPath": "\/images\/rosy.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/rosy.jpg": {
-		"fileType": 16384,
+	"\/images\/sherman.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 13198,
-		"inputAbbreviatedPath": "\/images\/team\/rosy.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/rosy.jpg",
+		"initialSize": 15779,
+		"inputAbbreviatedPath": "\/images\/sherman.png",
+		"outputAbbreviatedPath": "\/images\/sherman.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
-	"\/images\/team\/sherman.jpg": {
-		"fileType": 16384,
+	"\/images\/sylvia_rayner.png": {
+		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 7568,
-		"inputAbbreviatedPath": "\/images\/team\/sherman.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/sherman.jpg",
+		"initialSize": 15969,
+		"inputAbbreviatedPath": "\/images\/sylvia_rayner.png",
+		"outputAbbreviatedPath": "\/images\/sylvia_rayner.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
-		"processed": 1
-		},
-	"\/images\/team\/sylvia_rayner.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 22534,
-		"inputAbbreviatedPath": "\/images\/team\/sylvia_rayner.jpg",
-		"outputAbbreviatedPath": "\/images\/team\/sylvia_rayner.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 1
+		"processed": 0
 		},
 	"\/index.html": {
 		"fileType": 8192,
@@ -198,11 +207,11 @@
 		"decimalPrecision": 10,
 		"fileType": 4,
 		"ignore": 0,
-		"ignoreWasSetByUser": 0,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/scss\/style.scss",
 		"outputAbbreviatedPath": "\/css\/style.css",
 		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 1,
+		"outputPathIsSetByUser": 0,
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 1,
 		"shouldRunBless": 1,
@@ -859,7 +868,7 @@
 	"sassAutoOutputPathReplace1": "sass",
 	"sassAutoOutputPathReplace2": "css",
 	"sassAutoOutputPathStyle": 2,
-	"sassCreateSourceMap": 1,
+	"sassCreateSourceMap": 0,
 	"sassDebugStyle": 0,
 	"sassDecimalPrecision": 10,
 	"sassOutputStyle": 0,

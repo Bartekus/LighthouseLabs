@@ -1,19 +1,39 @@
 body {
   font-family: Verdana;
-  font-size: 1.5em; }
+  font-size: 1.5em;
+  background-color: #40B5AF; }
+  body h1, body h2 {
+    color: #5B51A2;
+    font-weight: bold;
+    text-align: center; }
 
 #team-members {
   clear: both; }
+  #team-members .member {
+    float: left;
+    margin: 10px;
+    padding: 10px; }
+    #team-members .member a.cssmouseover {
+      display: block;
+      width: 200px;
+      height: 200px;
+      border-radius: 44px;
+      box-shadow: 3px 3px 12px;
+      background-position: 0px 0px; }
+    #team-members .member a.cssmouseover:hover {
+      background-position: 0px -194px; }
+    #team-members .member div.name {
+      -khtml-border-radius: 13px;
+      border-radius: 13px;
+      box-shadow: 3px 3px 13px;
+      text-align: center;
+      font-weight: bold;
+      font-family: Arial;
+      font-size: large;
+      line-height: 2;
+      background-color: #FFC31B;
+      position: relative;
+      left: 0px;
+      top: 7px; }
 
-#team-members .member {
-  float: left;
-  /*border: 1px solid gray;*/
-  margin: 10px;
-  padding: 6px; }
-
-#team-members .member img {
-  width: 200px;
-  height: 200px; }
-
-#team-members .member div.name {
-  text-align: center; }
+/*# sourceMappingURL=style.css.map */
