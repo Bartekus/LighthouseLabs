@@ -81,7 +81,19 @@ COMMANDS:
     # Try to fetch the given url using Net::HTTP
     # If the URL is invalid, it should not bother fetching the URL and instead just return nil
     def fetch(url)
-      # ...
+      return nil if url.match(/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)\.[a-z]{2,5}(([0-9]{1,5})?\/.)?$/ix).nil?
+      begin
+        uri = URI(url)
+        res = Net::HTTP.get_response(uri)
+        History.current_history = History.create(url: url)
+        res
+      rescue URI::InvalidURIError, URI::InvalidComponentError
+        nil
+        History[:url] << uri
+        l = History.new
+        l.url = url
+        l.save
+      end
     end
 
     def display
