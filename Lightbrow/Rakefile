@@ -1,0 +1,30 @@
+require_relative 'config/database'
+
+desc 'create the db'
+task 'db:create' do
+  touch @db_path
+end
+
+desc 'drop the db'
+task 'db:drop' do
+  rm_f @db_path
+end
+
+desc 'dump the database'
+task 'db:schema:dump' do
+  establish_connection
+  filename = File.absolute_path('db/schema.rb', File.dirname(__FILE__))
+  File.open(filename, 'w:utf-8') do |file|
+    ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, file)
+  end
+end
+
+desc 'migrate the database (options: VERSION=x, VERBOSE=false, SCOPE=blog)'
+task 'db:migrate' do
+  establish_connection
+  ActiveRecord::Migration.verbose = ENV['VERBOSE'] ? ENV['VERBOSE'] == 'true' : true
+  ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths, ENV['VERSION'] ? ENV['VERSION'].to_i : nil) do |migration|
+    ENV['SCOPE'].blank? || (ENV['SCOPE'] == migration.scope)
+  end
+  Rake::Task['db:schema:dump'].invoke
+end

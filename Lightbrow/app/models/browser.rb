@@ -3,6 +3,7 @@ module LightBrow
 
     def run
       welcome
+      History.current_history = History.order(created_at: :desc).first
       loop do
         input
         break if quit?
@@ -57,19 +58,24 @@ COMMANDS:
     end
 
     def history
-      puts "History not implemented :(".white.on_red.blink
-    end
-
-    def back
-      puts "Back not implemented :(".white.on_red.blink
+      all_history = History.order(created_at: :desc)
+      all_history.each do |history| puts "#{history.url}" end
     end
 
     def forward
-      puts "Forward not implemented :(".white.on_red.blink
+      move_forward = History.where("created_at > ?", History.current_history.created_at).order(created_at: :asc).first
+      History.current_history = move_forward unless move_forward.nil?
+      visit(History.current_history.url, false) unless move_forward.nil?
     end
 
-    def visit(url)
-      if response = fetch(url)
+    def back
+      move_back = History.where("created_at < ?", History.current_history.created_at).order(created_at: :desc).first
+      History.current_history = move_back unless move_back.nil?
+      visit(History.current_history.url, false) unless move_back.nil?
+    end
+
+    def visit(url, new = true)
+      if response = fetch(url, new)
         @page = HTMLPage.new(response.body)
         display
       else
@@ -77,22 +83,24 @@ COMMANDS:
       end
     end
 
-    # TODO: Implement me
-    # Try to fetch the given url using Net::HTTP
-    # If the URL is invalid, it should not bother fetching the URL and instead just return nil
-    def fetch(url)
-      return nil if url.match(/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)\.[a-z]{2,5}(([0-9]{1,5})?\/.)?$/ix).nil?
+    def fetch(url, new)
+      # return nil if url.match(/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)\.[a-z]{2,5}(([0-9]{1,5})?\/.)?$/ix).nil?
+      return nil if url.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/).nil?
+      puts url
       begin
-        uri = URI(url)
-        res = Net::HTTP.get_response(uri)
+      uri = URI(url)
+      response = Net::HTTP.get_response(uri)
+      if new
         History.current_history = History.create(url: url)
-        res
+      end
+      response
+
       rescue URI::InvalidURIError, URI::InvalidComponentError
         nil
-        History[:url] << uri
-        l = History.new
-        l.url = url
-        l.save
+        # History[:url] << uri
+        # l = History.new
+        # l.url = url
+        # l.save
       end
     end
 
@@ -124,7 +132,5 @@ COMMANDS:
       print "#{label}: ".colorize(:red)
       puts value
     end
-
   end
-
 end

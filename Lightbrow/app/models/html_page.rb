@@ -1,7 +1,6 @@
 module LightBrow
   class HTMLPage
 
-
     def initialize(html)
       @html = html
     end
@@ -16,7 +15,8 @@ module LightBrow
     end
 
     def links(max=5)
-      links = content.css('a[href]').first(max).collect { |e| e.attributes['href'].value }
+      # links = content.css('a[href]').first(max).collect { |e| e.attributes['href'].value }
+      links = content.css('a[href]').first(max).collect{ |e| e['href'] }
     end
 
     private
@@ -24,6 +24,5 @@ module LightBrow
     def content
       @content ||= Nokogiri::HTML(@html)
     end
-
   end
 end

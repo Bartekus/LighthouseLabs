@@ -1,11 +1,9 @@
+require 'rubygems'
 require 'bundler/setup'
-require 'pry'
-require "net/http"
-require "uri"
-require 'nokogiri'
-require 'colorize'
 
-require_relative 'lib/light_brow/browser'
-require_relative 'lib/light_brow/html_page'
+require_relative 'config/database'
+require_relative 'config/environment'
 
+system ("clear")
+establish_connection
 LightBrow::Browser.new.run
