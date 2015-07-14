@@ -16,7 +16,9 @@ module LightBrow
 
     def links(max=5)
       # links = content.css('a[href]').first(max).collect { |e| e.attributes['href'].value }
-      links = content.css('a[href]').first(max).collect{ |e| e['href'] }
+      links = content.css('a').first(max).collect { |e| e['href'] }
+      links.delete("/")
+      links.uniq!
     end
 
     private

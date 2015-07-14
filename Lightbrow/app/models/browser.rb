@@ -28,6 +28,7 @@ COMMANDS:
 \\q - quit
 \\h - history
 \\b - back
+\\f - forward
       helptext
       puts help.colorize(:blue)
     end
@@ -45,15 +46,12 @@ COMMANDS:
     end
 
     def handle_command
-      case @input
-      when '\\?' # \?
-        help
-      when '\\h' # \h
-        history
-      when '\\b' # \b
-        back
-      when '\\f' # \f
-        forward
+      case @input[0..1]
+      when '\\?' then help # \?
+      when '\\h' then history # \h
+      when '\\b' then back # \b
+      when '\\f' then forward # \f
+      when '\\v' then link((@input[-1]).to_i)
       end
     end
 
@@ -74,6 +72,11 @@ COMMANDS:
       visit(History.current_history.url, false) unless move_back.nil?
     end
 
+    def link(number)
+      new = History.current_history.url.concat(@page.links[number])
+      visit(new, true)
+    end
+
     def visit(url, new = true)
       if response = fetch(url, new)
         @page = HTMLPage.new(response.body)
@@ -88,19 +91,14 @@ COMMANDS:
       return nil if url.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/).nil?
       puts url
       begin
-      uri = URI(url)
-      response = Net::HTTP.get_response(uri)
+        uri = URI(url)
+        response = Net::HTTP.get_response(uri)
       if new
         History.current_history = History.create(url: url)
       end
       response
-
       rescue URI::InvalidURIError, URI::InvalidComponentError
         nil
-        # History[:url] << uri
-        # l = History.new
-        # l.url = url
-        # l.save
       end
     end
 
