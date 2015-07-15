@@ -26,7 +26,6 @@ end
 
 post '/user_session' do
   @user = User.find_by_email(params[:email])
-
   if @user && @user.password == params[:password]
     session[:email] = @user.email
     redirect '/'
@@ -36,7 +35,7 @@ post '/user_session' do
   end
 end
 
-delete '/user_session' do
+get '/logout' do
   session[:email] = ""
   redirect '/'
 end
@@ -52,7 +51,8 @@ post '/users' do
     password: params[:password]
     )
   if @user.save
-    redirect '/user_session/new'
+    session[:email] = @user.email
+    redirect '/'
   else
     erb :'users/new'
   end

@@ -5,7 +5,7 @@ class CreateTracks < ActiveRecord::Migration
       t.string :title
       t.string :author
       t.string :url
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
