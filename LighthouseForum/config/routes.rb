@@ -14,6 +14,7 @@ LighthouseForum::Application.routes.draw do
 
   # The resources :posts replace the 6 lines of code above.
   resources :posts
+  root to: 'posts#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
