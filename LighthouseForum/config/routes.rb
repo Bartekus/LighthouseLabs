@@ -5,8 +5,10 @@ LighthouseForum::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
-  get 'posts', to: 'posts#index'
+  get 'posts',     to: 'posts#index'
+  get 'posts/new', to: 'posts#new'
   get 'posts/:id', to: 'posts#show'
+  post 'posts',    to: 'posts#create'
 
   # [tons of helpful comments]
 
