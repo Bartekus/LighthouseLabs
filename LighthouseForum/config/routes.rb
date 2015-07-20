@@ -5,12 +5,15 @@ LighthouseForum::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
-  get 'posts',          to: 'posts#index'
-  get 'posts/new',      to: 'posts#new'
-  get 'posts/:id/edit', to: 'posts#edit'
-  get 'posts/:id',      to: 'posts#show', as: 'post' # necessary for the update action!
-  patch 'posts/:id',    to: 'posts#update'
-  post 'posts',         to: 'posts#create'
+  # get 'posts',          to: 'posts#index'
+  # get 'posts/new',      to: 'posts#new'
+  # get 'posts/:id/edit', to: 'posts#edit'
+  # get 'posts/:id',      to: 'posts#show', as: 'post' # necessary for the update action!
+  # patch 'posts/:id',    to: 'posts#update'
+  # post 'posts',         to: 'posts#create'
+
+  # The resources :posts replace the 6 lines of code above.
+  resources :posts
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
