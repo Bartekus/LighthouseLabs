@@ -5,6 +5,10 @@ LighthouseForum::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
+  get 'posts', to: 'posts#index'
+
+  # [tons of helpful comments]
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
