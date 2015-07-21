@@ -1,13 +1,12 @@
 RottenMangoes::Application.routes.draw do
-  get "sessions/new"
-  get "sessions/create"
-  get "users/new"
-  get "users/create"
-  resources :movies
 
+  resources :movies do
+    resources :reviews, only: [:new, :create]
+  end
   resources :users, only: [:new, :create]
-
   resources :sessions, only: [:new, :create, :destroy]
+
+end
 
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -64,4 +63,4 @@ RottenMangoes::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-end
+#end
