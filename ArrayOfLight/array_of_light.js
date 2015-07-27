@@ -15,10 +15,9 @@ function arrayOfLight(range){
   var number = 0, array = [];
   while (number <= range) {
     array.push(number);
-    console.log(number);
     number += 1;
   }
-return array;
+return console.log(array);
 }
 
 arrayOfLight(5);
