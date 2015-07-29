@@ -2,9 +2,10 @@ function placeBet() {
   'use strict';
   var bet;
   while (+bet % 1 !== 0 || +bet === 5 || +bet === 10) {
-    bet = prompt('Place your bet now!\n[Only $5 or $10 please.]');
-    if (+bet % 1 != 0 || +bet === 5 || +bet === 10) {
+    bet = prompt('Place your bet now!\nOnly $5 or $10 please.');
+    if (+bet % 1 !== 0 || +bet !== 5 || +bet !== 10) {
       alert('Only $5 or $10!');
+      placeBet();
     };
   };
   return +bet;
